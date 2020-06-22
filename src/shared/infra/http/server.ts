@@ -7,6 +7,7 @@ import { errors } from 'celebrate';
 import 'express-async-errors';
 
 import AppError from '@shared/errors/AppError';
+import rateLimiter from '@shared/infra/http/middleware/RateLimiter';
 import routes from './routes';
 
 import '@shared/infra/typeorm';
@@ -16,6 +17,7 @@ const app = express();
 
 app.use(cors({}));
 app.use(express.json());
+app.use(rateLimiter);
 app.use(routes);
 
 app.use(errors());
