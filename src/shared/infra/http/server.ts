@@ -6,6 +6,7 @@ import cors from 'cors';
 import { errors } from 'celebrate';
 import 'express-async-errors';
 
+import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 import rateLimiter from '@shared/infra/http/middleware/RateLimiter';
 import routes from './routes';
@@ -17,6 +18,7 @@ const app = express();
 
 app.use(cors({}));
 app.use(express.json());
+app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(rateLimiter);
 app.use(routes);
 
@@ -41,5 +43,5 @@ app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
 
 app.listen(3333, () => {
   // eslint-disable-next-line
-  console.log('Server started on port 3333!');
+  console.log('⚡️ Server started on port 3333!');
 });
